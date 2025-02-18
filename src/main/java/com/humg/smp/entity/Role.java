@@ -1,7 +1,5 @@
 package com.humg.smp.entity;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,22 +27,6 @@ public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID;
-    private Long roleID;
-    private String password;
-    private String identityCard;
-    private String name;
-    private Timestamp dateOfBirth;
-    private String phone;
-    private Long genderID;
-    private String address;
-    private Long statusID;
-    private Long teacherID;
-    private String email;
-    private Long majorID;
-    private Long classID;
-    private int learnedCredits;
-    private Long paidTutionFee;
-    private Long tutionFee;
-    private  Long debtTutionFee;
+    private Long id;
+    private    
 }
