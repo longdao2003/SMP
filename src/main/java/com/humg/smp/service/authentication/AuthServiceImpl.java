@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String getUserRole(LoginDTO loginDTO) {
-        RoleType roleEnum=userRepository.findByIḍ(loginDTO.getUserID()).get().getRole().getType();
+        RoleType roleEnum=userRepository.findById(loginDTO.getUserID()).get().getRole().getType();
         switch (roleEnum) {
             case ADMIN:
                 return "ADMIN";

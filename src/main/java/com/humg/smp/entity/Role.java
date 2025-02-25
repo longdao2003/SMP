@@ -41,7 +41,7 @@ public class Role {
 
     RoleType type;
     
-    @OneToMany(mappedBy = "roleID")
+    @OneToMany(mappedBy = "role")
     List<User> users;
    
 }

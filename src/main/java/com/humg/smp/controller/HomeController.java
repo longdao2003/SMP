@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
     
     @GetMapping("")
-    public String getHomePage(@RequestParam String param) {
+    public String showHomePage() {
         return "home";
     }
 
