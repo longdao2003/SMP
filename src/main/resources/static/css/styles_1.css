@@ -3,21 +3,39 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f1f1f1;
+            background-color: #f5f5f5;
         }
         .navbar {
-            display: flex;
-            background-color: #007acc;
+            background-color: #007BFF;
             color: white;
             padding: 10px;
+            display: flex;
             justify-content: space-around;
             align-items: center;
-        }
+          }
+          
+          .navbar span {
+            cursor: pointer;
+          }
         .container {
             display: flex;
             justify-content: space-between;
             padding: 20px;
         }
+        .logout-btn {
+            display: block;
+            text-align: center;
+            background-color:#007BFF;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .logout-btn:hover {
+            background-color: yellow;
+        }
+        
         .main-content {
             display: flex;
             flex-direction: column;
@@ -30,7 +48,7 @@
             flex-direction: column;
             gap: 20px;
         }
-        .news, .notifications, .login-box, .features {
+        .news, .notifications, .login-box, .feature-box {
             background: white;
             padding: 15px;
             border-radius: 8px;
@@ -46,11 +64,17 @@
             height: 80px;
             border-radius: 5px;
         }
-        .features ul, .notifications ul {
+        .feature-box ul {
             list-style: none;
             padding: 0;
-        }
-        .features li, .notifications li {
-            padding: 5px 0;
-            border-bottom: 1px solid #ddd;
-        }
+          }
+          
+          .feature-box ul li {
+            margin-bottom: 10px;
+          }
+          
+          .feature-box ul li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+          }
