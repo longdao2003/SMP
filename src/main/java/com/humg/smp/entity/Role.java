@@ -1,6 +1,8 @@
 package com.humg.smp.entity;
 
 
+import java.util.List;
+
 import com.humg.smp.constant.RoleType;
 
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,6 +38,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
   
     Long id;
+
     RoleType type;
     
+    @OneToMany(mappedBy = "roleID")
+    List<User> users;
+   
 }

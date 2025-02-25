@@ -7,6 +7,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -30,11 +32,12 @@ import lombok.experimental.FieldDefaults;
 public class User {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userID;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-    Long roleID;
+    @ManyToOne
+     @JoinColumn(name ="roleID")
+    Role role;
+    
     String password;
     String identityCard;
     String name;
