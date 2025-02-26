@@ -118,3 +118,6 @@ form{
 button {
   cursor: pointer;
 }
+.text-danger{
+  color:red;
+}

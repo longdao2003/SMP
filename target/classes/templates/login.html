@@ -34,11 +34,13 @@
   </svg>
   <form name="form1" action="#" th:action="@{/login}" method="post" th:object="${loginDTO}">    
     <div class="email">
-      <label for="email">Email Address</label>
+      <label for="email">Mã người dùng</label>
       <div class="sec-2">
         <ion-icon name="mail-outline"></ion-icon>
-        <input type="email"  placeholder="" th:field="*{userID}"/>
+        <input  placeholder="" th:field="*{userID}" pattern="[0-9]+"/>
+        <p th:if ="${#fields.hasErrors('userID')}" th:errors="*{userID}" class="text-danger"></p>
       </div>
+      
     </div>
     <div class="password">
       <label for="password">Password</label>
@@ -46,12 +48,13 @@
         <ion-icon name="lock-closed-outline"></ion-icon>
         <input class="pas" type="password"  placeholder="" th:field="*{password}"/>
         <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+        <p th:if ="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></p>
       </div>
+      
     </div>
       <button class="login" >Login </button>
       <div class="footer"><span>Forgot Password?</span></div>
   </form>
- 
 
 </div>
 <!-- partial -->

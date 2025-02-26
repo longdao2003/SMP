@@ -18,13 +18,13 @@ public class DashBoardController {
     public String getDashBoard(@RequestParam String param, HttpSession session) {
         String role= session.getAttribute("role").toString();
         if ("ADMIN".equals(role)){
-            return "redirect:/dashboard/admin";
+            return "redirect:/dashboard/dashboard3_admin";
         }
         else if("GIANG_VIEN".equals(role)){
-            return "redirect:/dashboard/giang_vien";
+            return "redirect:/dashboard/dashboard2_GV";
         }
         else if("SINH_VIEN".equals(role)){
-            return "redirect:/dashboard/sinh_vien";
+            return "redirect:/dashboard/dashboard1";
         }
         else{
             return "redirect:/login";

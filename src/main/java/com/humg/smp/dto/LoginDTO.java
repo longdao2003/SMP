@@ -19,9 +19,8 @@ import lombok.NoArgsConstructor;
 public class LoginDTO {
 
 
-    @NotEmpty  
-    @Size(min = 6, max = 12, message = "The number must be between 6 and 12 characters.")
+    @NotNull(message = "Mã sinh viên không được để trống")
     private Long userID;
-    @NotEmpty  
+    @NotNull(message ="Mật khẩu không được để trống")  
     private String password;   
 }
