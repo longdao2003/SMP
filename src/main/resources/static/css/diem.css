@@ -145,3 +145,24 @@ form button {
 form button:hover {
     background-color: #0056b3;
 }
+.edit-btn .delete-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.edit-btn:hover {
+    background-color: darkorange;
+}
+
+.delete-btn {
+    background-color: red;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
