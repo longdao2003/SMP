@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.humg.smp.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    boolean existsById(Long userID);
+    boolean existsByUserID(Long userID);
 
     boolean existsByPassword(String password);
 
-    Optional<User> findById(Long userID);
-} 
+    Optional<User> findByUserID(Long userID);
+}

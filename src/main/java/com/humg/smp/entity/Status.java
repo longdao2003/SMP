@@ -1,5 +1,5 @@
 package com.humg.smp.entity;
-import com.humg.smp.constant.RoleType;
+
 import com.humg.smp.constant.StatusType;
 
 import jakarta.persistence.*;

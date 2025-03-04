@@ -53,6 +53,8 @@
       
     </div>
       <button class="login" >Login </button>
+  
+      <p th:each="m : ${errorMessage}" th:text="${m}" style="color: red;"></p>
       <div class="footer"><span>Forgot Password?</span></div>
   </form>
 

@@ -1,7 +1,6 @@
 package com.humg.smp.entity;
 
 import com.humg.smp.constant.GenderType;
-import com.humg.smp.constant.RoleType;
 
 import jakarta.persistence.*;
 
@@ -19,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 public class Gender {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-  
+
     Long id;
     GenderType type;
 }

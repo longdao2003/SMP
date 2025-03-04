@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-
 @Entity
 @Getter
 @Setter
@@ -28,14 +27,14 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-    
+
     @Id
     Long userID;
 
     @ManyToOne
-    @JoinColumn(name ="roleID")
+    @JoinColumn(name = "roleID")
     Role role;
-    
+
     String password;
     String identityCard;
     String name;

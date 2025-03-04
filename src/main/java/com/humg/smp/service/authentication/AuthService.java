@@ -1,10 +1,11 @@
 package com.humg.smp.service.authentication;
 
 import com.humg.smp.dto.LoginDTO;
+import com.humg.smp.dto.respone.Respone;
 
 public interface AuthService {
-    public boolean authenticate(LoginDTO loginDTO);
+    public Respone authenticate(LoginDTO loginDTO);
 
     public String getUserRole(LoginDTO loginDTO);
-    
-} 
+
+}
