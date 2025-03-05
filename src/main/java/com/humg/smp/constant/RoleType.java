@@ -1,5 +1,8 @@
 package com.humg.smp.constant;
-public class RoleEnum {
-
-    
+public enum RoleType{
+    ADMIN,
+    GIANG_VIEN,
+    SINH_VIEN
 }
+    
+

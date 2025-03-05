@@ -38,6 +38,11 @@ body {
   color: #4d4d4d;
   margin-top: -3em;
 }
+form{
+  display: flex;
+  flex-direction: column;
+  gap:2em;
+}
 .screen-1 .email input {
   outline: none;
   border: none;
@@ -112,4 +117,7 @@ body {
 
 button {
   cursor: pointer;
+}
+.text-danger{
+  color:red;
 }
