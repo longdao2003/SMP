@@ -22,24 +22,64 @@
     <div class="container">
         <div class="left-content">
             <section class="news">
-                <h2>TIN TỨC</h2>
+                <h2>THÔNG TIN GIẢNG VIÊN</h2>
                 <div class="news-item">
-                    <img src="../static/images/humg.jpg" alt="">
-                    <p>Hướng dẫn quy trình Thực tập, Đồ án (từ Học kỳ 2 năm học 2023-2024)</p>
+                    <div class="row align-items-center">
+                        <!-- Cột chứa nội dung thông tin sinh viên -->
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-4"><strong>Mã GV:</strong></div>
+                                <div class="col-8">200703</div>
+                                <div class="col-4"><strong>Họ và tên:</strong></div>
+                                <div class="col-8">Đinh Thế Tú</div>
+                                <div class="col-4"><strong>Ngày sinh:</strong></div>
+                                <div class="col-8">20/07/2003</div>
+                                <div class="col-4"><strong>Giới tính:</strong></div>
+                                <div class="col-8">Nam</div>
+                                <div class="col-4"><strong>Điện thoại:</strong></div>
+                                <div class="col-8">0777346614</div>
+                                <div class="col-4"><strong>Số CMND/CCCD:</strong></div>
+                                <div class="col-8">001203017459</div>
+                                <div class="col-4"><strong>Email:</strong></div>
+                                <div class="col-8">2121051396@teacher.humg.edu.vn</div>
+                                <div class="col-4"><strong>Hiện diện:</strong></div>
+                                <div class="col-8">Đang công tác</div>
+                                <div class="col-4"><strong>Hộ khẩu:</strong></div>
+                                <div class="col-8">Thôn Yên Thái, Tiền Yên, Hoài Đức, Hà Nội</div>
+                            </div>
+                        </div>
+                        <!-- Cột chứa ảnh sinh viên -->
+                        <div class="col-md-2 text-center">
+                            <img th:src="@{/images/humg.jpg}" alt="Ảnh Giảng Viên" class="img-fluid rounded">
+                        </div>
+                    </div>
                 </div>
-                <div class="news-item">
-                    <img src="../static/images/humg.jpg" alt="">
-                    <p>Trường Đại học Mỏ - Địa chất đạt chứng nhận kiểm định chất lượng cơ sở giáo dục</p>
-                </div>
+                
+                
             </section>
             <br>
-            <section class="notifications">
-                <h2>THÔNG BÁO</h2>
-                <ul>
-                    <li>Về việc phát bằng tốt nghiệp Đợt 1 - Năm học 2024-2025</li>
-                    <li>Kiểm tra điều kiện xét tốt nghiệp đợt 2 năm học 2024-2025</li>
-                    <li>Việc mở thêm các lớp, ghép lớp học kỳ 2 năm học 2024-2025</li>
-                </ul>
+            <section class="news">
+                <h2>THÔNG TIN KHÓA HỌC</h2>
+                <div class="news-item">
+                    <div class="row align-items-center">
+                        <!-- Cột chứa nội dung thông tin sinh viên -->
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-4"><strong>Chủ nhiệm lớp:</strong></div>
+                                <div class="col-8">DCCTCT6605D</div>
+                                <div class="col-4"><strong>Ngành:</strong></div>
+                                <div class="col-8">Công nghệ thông tin</div>
+                                <div class="col-4"><strong>Chuyên ngành:</strong></div>
+                                <div class="col-8">Công nghệ phần mềm</div>
+                                <div class="col-4"><strong>Khoa:</strong></div>
+                                <div class="col-8">Công nghệ thông tin</div>
+                                
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
             </section>
         </div>
         <aside class="right-sidebar">
