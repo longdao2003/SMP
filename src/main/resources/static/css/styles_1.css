@@ -140,7 +140,7 @@ body {
           form button:hover {
             background-color: #0056b3;
           }
-          .edit-btn .delete-btn {
+          .edit-btn .delete-btn .add-btn{
             background-color: #007BFF;
             color: white;
             padding: 5px 10px;
@@ -157,7 +157,9 @@ body {
             background-color: red;
             color: white;
         }
-        
+        .add-btn:hover{
+            background-color: aqua;
+        }
         .delete-btn:hover {
             background-color: darkred;
         }    
@@ -175,4 +177,11 @@ body {
         .pagination a.active {
             background-color:#007BFF;
             color: white;
+        }
+        .input-form {
+            margin-bottom: 20px;
+        }
+        .input-form input, .input-form button {
+            padding: 10px;
+            margin: 5px;
         }
