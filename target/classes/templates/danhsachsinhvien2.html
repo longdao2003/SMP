@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Điểm</title>
+    <title>Danh sách sinh viên</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/styles_1.css">
 </head>
@@ -21,65 +21,50 @@
 
     <div class="container">
         <div class="left-content">
-            <h2>Quản Lý Điểm Sinh Viên</h2>
+            <h2>Danh sách</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>STT</th>
-                        <th>Mã SV</th>
-                        <th>Họ và Tên</th>
-                        <th>Môn học</th>
-                        <th>Mã môn học</th>
-                        <th>Điểm</th>
-                        <th>Thao tác</th>
+                        <th>Số thứ tự</th>
+                        <th>Mã sinh viên</th>
+                        <th>Họ tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Điểm danh</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>HS001</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>Toán Cao cấp</td>
-                         <td>7080953</td>
-                        <td contenteditable="true">9.0</td>
-                        <td class="actions">
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
+                        <td>2231</td>
+                        <td>Lý A</td>
+                        <td>5/2/2003</td>
+                        <td><input type="radio" name="diemdanh1" value="Co"> Có
+                            <input type="radio" name="diemdanh1" value="Vang"> Vắng
                         </td>
+                        
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>HS002</td>
+                        <td>2232</td>
                         <td>Trần Thị B</td>
-                        <td>Logix đại cương</td>
-                        <td>703012</td>
-                        <td contenteditable="true">8.5</td>
-                        
-                        <td class="actions">
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
+                        <td>13/4/2003</td>
+                        <td><input type="radio" name="diemdanh2" value="Co"> Có
+                            <input type="radio" name="diemdanh2" value="Vang"> Vắng
                         </td>
+                        
                     </tr>
                 </tbody>
             </table>
-
-            <div class="pagination">
-                <a href="#">&laquo;</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">&raquo;</a>
-            </div>
         </div>
 
-        <div class="right-sidebar">
+        <aside class="right-sidebar">
             <div class="login-box">
                 <h3>THÔNG TIN</h3>
                 <p>Mã giảng viên: 2121051396</p>
                 <p>Họ và tên: Đinh Thế Tú</p>
                 <a href="login.html" class="logout-btn">Đăng xuất</a>
             </div>
-
             <div class="feature-box">
                 <h3>TÍNH NĂNG</h3>
                 <ul>
@@ -88,7 +73,9 @@
                     <li> <a href="dangkygiangday.html">Đăng ký giảng dạy</a></li>
                 </ul>
             </div>
-        </div>
+        </aside>
+    </div>
+    <script src="../static/js/script.js"></script>
     </div>
 </body>
 </html>

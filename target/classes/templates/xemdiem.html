@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Điểm</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/styles_1.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16" style="margin: 0 0 -2 0;">
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+              </svg>
+               <a href="dashboard1.html" style="text-decoration: none; color: aliceblue;"> Trang chủ </a>
+            </span>
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="left-content">
+            <h2>Bảng Điểm Sinh Viên</h2>       
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã môn</th>
+                        <th>Tên môn học</th>
+                        <th>Điểm giữa kỳ</th>
+                        <th>Điểm cuối kỳ</th>
+                        <th>Điểm tổng kết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CT101</td>
+                        <td>Lập trình C</td>
+                        <td>7.5</td>
+                        <td>8.0</td>
+                        <td>7.8</td>
+                    </tr>
+                    <tr>
+                        <td>MT102</td>
+                        <td>Toán cao cấp</td>
+                        <td>6.5</td>
+                        <td>7.0</td>
+                        <td>6.8</td>
+                    </tr>
+                    <tr>
+                        <td>PH103</td>
+                        <td>Vật lý đại cương</td>
+                        <td>8.0</td>
+                        <td>8.5</td>
+                        <td>8.3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sidebar: Đăng nhập & Tính năng -->
+        <div class="right-sidebar">
+            <div class="login-box">
+                <h3>THÔNG TIN</h3>
+                <p>Mã số sinh viên: 2121051396</p>
+                <p>Họ và tên: Đinh Thế Tú</p>
+                <a href="login.html" class="logout-btn">Đăng xuất</a>
+            </div>
+
+            <div class="feature-box">
+                <h3>TÍNH NĂNG</h3>
+                <ul>
+                    <li><a href="xemdiem.html">Xem điểm</a></li>
+                    <li><a href="xemthoikhoabieu.html">Xem thời khóa biểu</a></li>
+                    <li><a href="xemlichthi.html">Xem lịch thi</a></li>
+                    <li><a href="dangkymonhoc.html">Đăng ký môn</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
