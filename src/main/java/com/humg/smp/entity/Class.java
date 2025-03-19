@@ -1,5 +1,7 @@
 package com.humg.smp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -20,5 +22,10 @@ public class Class {
 
     String name;
     
-    Long majorID;
+    @ManyToOne
+    @JoinColumn(name="majorID")
+    Major major;
+
+    @OneToMany(mappedBy = "cLass")
+    List<User> users;
 }

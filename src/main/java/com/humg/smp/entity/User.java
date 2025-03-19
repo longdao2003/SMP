@@ -40,13 +40,32 @@ public class User {
     String name;
     Timestamp dateOfBirth;
     String phone;
-    Long genderID;
+    
+    @ManyToOne
+    @JoinColumn(name="genderID")
+    Gender gender;
+    
+    
+    
     String address;
-    Long statusID;
+    
+    @ManyToOne
+    @JoinColumn(name="statusID")
+    Status status;
+
+
     Long teacherID;
     String email;
-    Long majorID;
-    Long classID;
+    
+    @ManyToOne
+    @JoinColumn(name="majorID")
+    Major major;
+
+    @ManyToOne
+    @JoinColumn(name="classID")
+    Class cLass;
+
+
     int learnedCredits;
     Long paidTutionFee;
     Long tutionFee;

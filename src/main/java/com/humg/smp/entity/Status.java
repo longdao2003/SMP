@@ -1,5 +1,7 @@
 package com.humg.smp.entity;
 
+import java.util.List;
+
 import com.humg.smp.constant.StatusType;
 
 import jakarta.persistence.*;
@@ -19,5 +21,10 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Enumerated(EnumType.STRING)
     StatusType type;
+
+    @OneToMany(mappedBy = "status")
+    List<User> users;
 }

@@ -1,5 +1,7 @@
 package com.humg.smp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -15,12 +17,22 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Major {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String name;
+    String name;    
 
-    Long childMajorID;
+    @OneToMany(mappedBy = "major" )
+    List<User> users;
 
-    String majorID;
+    @OneToMany(mappedBy = "major") 
+    List<ChildMajor> childMajors;
+
+    @OneToMany(mappedBy = "major")
+    List<Class> cLasses;
+
+
+
+
+
+
 }

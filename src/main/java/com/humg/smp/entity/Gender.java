@@ -1,5 +1,7 @@
 package com.humg.smp.entity;
 
+import java.util.List;
+
 import com.humg.smp.constant.GenderType;
 
 import jakarta.persistence.*;
@@ -20,5 +22,10 @@ public class Gender {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     Long id;
+
+    @Enumerated(EnumType.STRING)
     GenderType type;
+
+    @OneToMany(mappedBy = "gender")
+    List<User> users;
 }

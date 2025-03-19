@@ -18,4 +18,8 @@ public class ChildMajor {
     String childMajorID;
 
     String name;
+
+    @ManyToOne
+    @JoinColumn(name = "majorID")
+    Major major;
 }
