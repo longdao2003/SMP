@@ -1,5 +1,6 @@
 package com.humg.smp.entity;
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "major")
+
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Term {
@@ -19,8 +20,14 @@ public class Term {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
 
-    Long yearId;
     LocalDate startDate;
     LocalDate endDate;
     char termNumber;
+
+    @ManyToMany(mappedBy = "terms")
+    List<Subject> subjects;
+
+    @ManyToOne
+    @JoinColumn(name="yearID")
+    SchoolYear schoolYear;
 }

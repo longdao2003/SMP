@@ -30,6 +30,9 @@ public class Major {
     @OneToMany(mappedBy = "major")
     List<Class> cLasses;
 
+    @OneToMany(mappedBy = "major")
+    List<SubjectMajor> subjectMajors;
+
 
 
 

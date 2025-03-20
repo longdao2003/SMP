@@ -1,5 +1,7 @@
 package com.humg.smp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -10,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "major")
+
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Subject {
@@ -21,8 +23,18 @@ public class Subject {
     String name;
     int credits;
 
-    Long yearaLevelID;
+    @ManyToMany()
+    @JoinTable(
+        name="term_subject",
+        joinColumns = @JoinColumn(name ="subjectID"),
+        inverseJoinColumns = @JoinColumn(name = "termID")
+    )
+    List<Term> terms;
 
-    String preSubjectID;
+    Long preSubjectID;
     boolean isElective;
+
+
+    @OneToMany(mappedBy = "subject")
+    List<SubjectMajor> subjectMajors;
 }

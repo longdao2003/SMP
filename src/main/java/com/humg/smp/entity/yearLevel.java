@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "major")
+@Table(name = "yearLevel")
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class yearLevel {

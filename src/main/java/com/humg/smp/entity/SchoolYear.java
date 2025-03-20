@@ -1,6 +1,7 @@
 package com.humg.smp.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -23,4 +24,7 @@ public class SchoolYear {
     LocalDate startDate;
     LocalDate endDate;
     String name;
+
+    @OneToMany(mappedBy = "schoolYear")
+    List<Term> terms;
 }

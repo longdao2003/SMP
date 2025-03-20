@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "class")
+@Table(name = "room")
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Room {

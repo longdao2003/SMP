@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -53,8 +53,9 @@ public class User {
     @JoinColumn(name="statusID")
     Status status;
 
-
-    Long teacherID;
+    @OneToOne
+    @JoinColumn(name="teacherID", referencedColumnName = "userID", insertable = false, updatable = false )
+    User teacher;
     String email;
     
     @ManyToOne
