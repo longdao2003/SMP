@@ -24,28 +24,28 @@
             <h2>Tạo Lịch Học</h2>
 
             <form id="add-schedule-form">
-                <label for="subject">Môn Học:</label>
-                <input type="text" id="subject" name="subject" placeholder="Nhập tên môn học" required>
+                <label for="mamonHoc">Mã môn học:</label>
+                <input type="text" id="mamonHoc" placeholder="Nhập mã môn học" required>
 
-                <label for="subject">Mã môn Học:</label>
-                <input type="text" id="subject" name="subject" placeholder="Nhập mã môn học" required>
+                <label for="subject">Môn học:</label>
+                <input type="text" id="subject" placeholder="Nhập tên môn học" required>
 
-                <label for="day">Ngày Học:</label>
-                <input type="date" id="day" name="day" required>
+                <label for="day">Ngày học:</label>
+                <input type="date" id="day" required>
 
-                <label for="time">Giờ Học:</label>
-                <input type="time" id="time" name="time" required>
+                <label for="time">Giờ học:</label>
+                <input type="time" id="time" required>
 
-                <label for="room">Phòng Học:</label>
-                <input type="text" id="room" name="room" placeholder="Nhập phòng học" required>
+                <label for="room">Phòng học:</label>
+                <input type="text" id="room" placeholder="Nhập phòng học" required>
 
-                <button type="submit">Thêm Lịch Học</button>
+                <button type="button" id="submit-btn" onclick="handleSubmit()">Thêm Lịch Học</button>
             </form>
-
             <h2>Danh Sách Lịch Học</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Mã môn</th>
                         <th>Môn Học</th>
                         <th>Ngày</th>
@@ -54,30 +54,7 @@
                         <th>Hành Động</th>
                     </tr>
                 </thead>
-                <tbody id="schedule-list">
-                    <tr>
-                        <td>21212</td>
-                        <td>Lập trình C</td>
-                        <td>2025-03-15</td>
-                        <td>08:00</td>
-                        <td>Phòng 101</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2323</td>
-                        <td>Toán cao cấp</td>
-                        <td>2025-03-17</td>
-                        <td>10:00</td>
-                        <td>Phòng 203</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="schedule-list"></tbody>
             </table>
         </div>
 
@@ -101,6 +78,106 @@
         </div>
     </div>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var today = new Date().toISOString().split('T')[0];
+                document.getElementById("day").setAttribute("min", today);
+
+            const scheduleList = document.getElementById("schedule-list");
+            let editingRow = null;
+            const submitBtn = document.getElementById("submit-btn");
+
+            function loadSchedules() {
+                const savedSchedules = JSON.parse(localStorage.getItem("studySchedules")) || [];
+                scheduleList.innerHTML = "";
+                savedSchedules.forEach((schedule,index) => addRow(schedule,index +1));
+            }
+
+            function saveSchedules() {
+                const rows = Array.from(scheduleList.children).map(row => {
+                    return {
+                        mamonHoc: row.cells[1].textContent,
+                        subject: row.cells[2].textContent,
+                        day: row.cells[3].textContent,
+                        time: row.cells[4].textContent,
+                        room: row.cells[5].textContent
+                    };
+                });
+                localStorage.setItem("studySchedules", JSON.stringify(rows));
+                updateSTT();
+            }
+
+            function addRow(schedule,stt) {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${stt}</td>
+                    <td>${schedule.mamonHoc}</td>
+                    <td>${schedule.subject}</td>
+                    <td>${schedule.day}</td>
+                    <td>${schedule.time}</td>
+                    <td>${schedule.room}</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>`;
+                scheduleList.appendChild(newRow);
+                addEventListeners(newRow);
+            }
+            function updateSTT() {
+                Array.from(scheduleList.children).forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+            window.handleSubmit = function () {
+                const mamonHoc = document.getElementById("mamonHoc").value;
+                const subject = document.getElementById("subject").value;
+                const day = document.getElementById("day").value;
+                const time = document.getElementById("time").value;
+                const room = document.getElementById("room").value;
+
+                if (!mamonHoc || !subject || !day || !time || !room) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                if (editingRow) {
+                    editingRow.cells[1].textContent = mamonHoc;
+                    editingRow.cells[2].textContent = subject;
+                    editingRow.cells[3].textContent = day;
+                    editingRow.cells[4].textContent = time;
+                    editingRow.cells[5].textContent = room;
+                    editingRow = null;
+                    submitBtn.textContent = "Thêm Lịch Học";
+                } else {
+                    addRow({ mamonHoc, subject, day, time, room });
+                }
+                saveSchedules();
+                document.getElementById("add-schedule-form").reset();
+            };
+
+            function deleteSchedule(event) {
+                event.target.closest("tr").remove();
+                saveSchedules();
+                updateSTT();
+            }
+
+            function editSchedule(event) {
+                editingRow = event.target.closest("tr");
+                document.getElementById("mamonHoc").value = editingRow.cells[0].textContent;
+                document.getElementById("subject").value = editingRow.cells[1].textContent;
+                document.getElementById("day").value = editingRow.cells[2].textContent;
+                document.getElementById("time").value = editingRow.cells[3].textContent;
+                document.getElementById("room").value = editingRow.cells[4].textContent;
+                submitBtn.textContent = "Cập nhật";
+            }
+
+            function addEventListeners(row) {
+                row.querySelector(".delete-btn").onclick = deleteSchedule;
+                row.querySelector(".edit-btn").onclick = editSchedule;
+            }
+
+            loadSchedules();
+        });
+    </script>
 </body>
 </html>

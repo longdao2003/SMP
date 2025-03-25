@@ -32,39 +32,21 @@
                 <label for="credit">Số Tín Chỉ:</label>
                 <input type="number" id="credit" name="credit" placeholder="Nhập số tín chỉ" required>
 
-                <button type="submit">Thêm Môn Học</button>
+                <button type="button" id="submit-btn" onclick="handleSubmit()">Thêm Môn Học</button>
             </form>
 
             <h2>Danh Sách Môn Học</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Mã Môn</th>
                         <th>Tên Môn Học</th>
                         <th>Số Tín Chỉ</th>
                         <th>Hành Động</th>
                     </tr>
                 </thead>
-                <tbody id="subject-list">
-                    <tr>
-                        <td>CT101</td>
-                        <td>Lập trình C</td>
-                        <td>3</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>MT102</td>
-                        <td>Toán cao cấp</td>
-                        <td>4</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="subject-list"></tbody>
             </table>
         </div>
 
@@ -87,5 +69,94 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const subjectList = document.getElementById("subject-list");
+            let editingRow = null;
+            const submitBtn = document.getElementById("submit-btn");
+
+            function loadSubjects() {
+                const savedSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
+                subjectList.innerHTML = "";
+                savedSubjects.forEach((subject,index) => addRow(subject,index +1));
+            }
+
+            function saveSubjects() {
+                const rows = Array.from(subjectList.children).map((row,index) => {
+                    return {
+                        subjectId: row.cells[1].textContent,
+                        subjectName: row.cells[2].textContent,
+                        credit: row.cells[3].textContent
+                    };
+                });
+                localStorage.setItem("subjects", JSON.stringify(rows));
+                updateSTT();
+            }
+
+            function addRow(subject,stt) {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${stt}</td>
+                    <td>${subject.subjectId}</td>
+                    <td>${subject.subjectName}</td>
+                    <td>${subject.credit}</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>`;
+                subjectList.appendChild(newRow);
+                addEventListeners(newRow);
+            }
+            function updateSTT() {
+                Array.from(subjectList.children).forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            window.handleSubmit = function () {
+                const subjectId = document.getElementById("subject-id").value;
+                const subjectName = document.getElementById("subject-name").value;
+                const credit = document.getElementById("credit").value;
+
+                if (!subjectId || !subjectName || !credit) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                if (editingRow) {
+                    editingRow.cells[1].textContent = subjectId;
+                    editingRow.cells[2].textContent = subjectName;
+                    editingRow.cells[3].textContent = credit;
+                    editingRow = null;
+                    submitBtn.textContent = "Thêm Môn Học";
+                } else {
+                    addRow({ subjectId, subjectName, credit });
+                }
+                saveSubjects();
+                document.getElementById("add-subject-form").reset();
+            };
+
+            function deleteSubject(event) {
+                event.target.closest("tr").remove();
+                saveSubjects();
+                updateSTT();
+            }
+
+            function editSubject(event) {
+                editingRow = event.target.closest("tr");
+                document.getElementById("subject-id").value = editingRow.cells[0].textContent;
+                document.getElementById("subject-name").value = editingRow.cells[1].textContent;
+                document.getElementById("credit").value = editingRow.cells[2].textContent;
+                submitBtn.textContent = "Cập nhật";
+            }
+
+            function addEventListeners(row) {
+                row.querySelector(".delete-btn").onclick = deleteSubject;
+                row.querySelector(".edit-btn").onclick = editSubject;
+            }
+
+            loadSubjects();
+        });
+    </script>
 </body>
 </html>

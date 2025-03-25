@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký môn học</title>
+    <title>Đăng ký giảng dạy</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/styles_1.css">
 </head>
@@ -23,27 +23,33 @@
         <div class="left-content">
             <h2>Đăng ký giảng dạy</h2>
             <form action="#">
-                <label for="course">Chọn môn học:</label>
-                <select id="course" name="course" required>
-                    <option value="">-- Chọn môn học --</option>
-                    <option value="math">Toán học</option>
-                    <option value="physics">Vật lý</option>
-                    <option value="chemistry">Hóa học</option>
-                    <option value="programming">Lập trình</option>
-                </select>
-
-                <label for="course-id">Mã môn học:</label>
-                <input type="text" id="course-id" name="course-id" placeholder="Nhập mã môn học" required>
-
+                <label for="subject-id">Mã Môn Học:</label>
+                <input type="text" id="subject-id" required>
+    
+                <label for="subject-name">Tên Môn Học:</label>
+                <input type="text" id="subject-name" required>
                 <label for="semester">Chọn học kỳ:</label>
                 <select id="semester" name="semester" required>
                     <option value="">-- Chọn học kỳ --</option>
-                    <option value="spring">Học kỳ 1</option>
-                    <option value="summer">Học kỳ 2</option>
-                    <option value="fall">Học kỳ 3</option>
+                    <option value="Học kỳ 1">Học kỳ 1</option>
+                    <option value="Học kỳ 2">Học kỳ 2</option>
+                    <option value="Học kỳ 3">Học kỳ 3</option>
                 </select>
-                <button type="submit">Đăng ký</button>
+                <button type="button" id="submit-btn" onclick="handleSubmit()">Đăng ký</button>
             </form>
+            <h2>Danh Sách Đăng Ký Giảng Dạy</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã Môn Học</th>
+                        <th>Môn Học</th>
+                        <th>Học Kỳ</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody id="teaching-list"></tbody>
+            </table>
         </div>
 
         <div class="right-sidebar">
@@ -64,5 +70,95 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const teachingList = document.getElementById("teaching-list");
+            let editingRow = null;
+            const submitBtn = document.getElementById("submit-btn");
+
+            function loadTeachingRegistrations() {
+                const savedRegistrations = JSON.parse(localStorage.getItem("teachingRegistrations")) || [];
+                teachingList.innerHTML = "";
+                savedRegistrations.forEach((registration, index) => addRow(registration, index + 1));
+            }
+
+            function saveTeachingRegistrations() {
+                const rows = Array.from(teachingList.children).map(row => {
+                    return {
+                        subjectId: row.cells[1].textContent,
+                        subjectName: row.cells[2].textContent,
+                        semester: row.cells[3].textContent
+                    };
+                });
+                localStorage.setItem("teachingRegistrations", JSON.stringify(rows));
+                updateSTT();
+            }
+
+            function addRow(registration, stt) {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${stt}</td>
+                    <td>${registration.subjectId}</td>
+                    <td>${registration.subjectName}</td>
+                    <td>${registration.semester}</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>`;
+                teachingList.appendChild(newRow);
+                addEventListeners(newRow);
+            }
+
+            function updateSTT() {
+                Array.from(teachingList.children).forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            window.handleSubmit = function () {
+                const subjectId = document.getElementById("subject-id").value;
+                const subjectName = document.getElementById("subject-name").value;
+                const semester = document.getElementById("semester").value;
+
+                if (!subjectId || !subjectName || !semester) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                if (editingRow) {
+                    editingRow.cells[1].textContent = subjectId;
+                    editingRow.cells[2].textContent = subjectName;
+                    editingRow.cells[3].textContent = semester;
+                    editingRow = null;
+                    submitBtn.textContent = "Đăng ký";
+                } else {
+                    addRow({ subjectId, subjectName, semester }, teachingList.children.length + 1);
+                }
+                saveTeachingRegistrations();
+                document.getElementById("register-teaching-form").reset();
+            };
+
+            function deleteRegistration(event) {
+                event.target.closest("tr").remove();
+                saveTeachingRegistrations();
+                updateSTT();
+            }
+
+            function editRegistration(event) {
+                editingRow = event.target.closest("tr");
+                document.getElementById("subject-id").value = editingRow.cells[1].textContent;
+                document.getElementById("subject-name").value = editingRow.cells[2].textContent;
+                document.getElementById("semester").value = editingRow.cells[3].textContent;
+                submitBtn.textContent = "Cập nhật";
+            }
+
+            function addEventListeners(row) {
+                row.querySelector(".delete-btn").onclick = deleteRegistration;
+                row.querySelector(".edit-btn").onclick = editRegistration;
+            }
+
+            loadTeachingRegistrations();
+        });
+    </script>
 </body>
 </html>

@@ -36,48 +36,21 @@
                     <option value="giangvien">Giảng viên</option>
                 </select>
 
-                <button type="submit">Thêm Người Dùng</button>
+                <button type="button" id="submit-btn" onclick="handleSubmit()">Thêm Người Dùng</button>
             </form>
 
             <h2>Danh Sách Người Dùng</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Mã</th>
                         <th>Tên</th>
                         <th>Vai Trò</th>
                         <th>Hành Động</th>
                     </tr>
                 </thead>
-                <tbody id="user-list">
-                    <tr>
-                        <td>2121051396</td>
-                        <td>Đinh Thế Tú</td>
-                        <td>Sinh viên</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>GV1001</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>Giảng viên</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>AD0001</td>
-                        <td>Trần Minh Quân</td>
-                        <td>Admin</td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="user-list"></tbody>
             </table>
         </div>
 
@@ -100,6 +73,95 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userList = document.getElementById("user-list");
+            let editingRow = null;
+            const submitBtn = document.getElementById("submit-btn");
 
-   
+            function loadUsers() {
+                const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+                userList.innerHTML = "";
+                savedUsers.forEach((user, index) => addRow(user, index + 1));
+            }
+
+            function saveUsers() {
+                const rows = Array.from(userList.children).map((row, index) => {
+                    return {
+                        userId: row.cells[1].textContent,
+                        userName: row.cells[2].textContent,
+                        userRole: row.cells[3].textContent
+                    };
+                });
+                localStorage.setItem("users", JSON.stringify(rows));
+                updateSTT();
+            }
+
+            function addRow(user, stt) {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${stt}</td>
+                    <td>${user.userId}</td>
+                    <td>${user.userName}</td>
+                    <td>${user.userRole}</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>`;
+                userList.appendChild(newRow);
+                addEventListeners(newRow);
+            }
+
+            function updateSTT() {
+                Array.from(userList.children).forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            window.handleSubmit = function () {
+                const userId = document.getElementById("user-id").value;
+                const userName = document.getElementById("user-name").value;
+                const userRole = document.getElementById("user-role").value;
+
+                if (!userId || !userName || !userRole) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                if (editingRow) {
+                    editingRow.cells[1].textContent = userId;
+                    editingRow.cells[2].textContent = userName;
+                    editingRow.cells[3].textContent = userRole;
+                    editingRow = null;
+                    submitBtn.textContent = "Thêm Người Dùng";
+                } else {
+                    addRow({ userId, userName, userRole }, userList.children.length + 1);
+                }
+                saveUsers();
+                document.getElementById("add-user-form").reset();
+            };
+
+            function deleteUser(event) {
+                event.target.closest("tr").remove();
+                saveUsers();
+                updateSTT();
+            }
+
+            function editUser(event) {
+                editingRow = event.target.closest("tr");
+                document.getElementById("user-id").value = editingRow.cells[1].textContent;
+                document.getElementById("user-name").value = editingRow.cells[2].textContent;
+                document.getElementById("user-role").value = editingRow.cells[3].textContent;
+                submitBtn.textContent = "Cập nhật";
+            }
+
+            function addEventListeners(row) {
+                row.querySelector(".delete-btn").onclick = deleteUser;
+                row.querySelector(".edit-btn").onclick = editUser;
+            }
+
+            loadUsers();
+        });
+    </script>
+</body> 
 </html>

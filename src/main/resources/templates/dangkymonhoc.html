@@ -23,27 +23,34 @@
         <div class="left-content">
             <h2>Đăng ký môn học</h2>
             <form action="#">
-                <label for="course">Chọn môn học:</label>
-                <select id="course" name="course" required>
-                    <option value="">-- Chọn môn học --</option>
-                    <option value="math">Toán học</option>
-                    <option value="physics">Vật lý</option>
-                    <option value="chemistry">Hóa học</option>
-                    <option value="programming">Lập trình</option>
-                </select>
-
-                <label for="course-id">Mã môn học:</label>
-                <input type="text" id="course-id" name="course-id" placeholder="Nhập mã môn học" required>
+                <label for="subject-id">Mã Môn Học:</label>
+                <input type="text" id="subject-id" required>
+    
+                <label for="subject-name">Tên Môn Học:</label>
+                <input type="text" id="subject-name" required>
 
                 <label for="semester">Chọn học kỳ:</label>
                 <select id="semester" name="semester" required>
                     <option value="">-- Chọn học kỳ --</option>
-                    <option value="spring">Học kỳ 1</option>
-                    <option value="summer">Học kỳ 2</option>
-                    <option value="fall">Học kỳ 3</option>
+                    <option value="Học kỳ 1">Học kỳ 1</option>
+                    <option value="Học kỳ 2">Học kỳ 2</option>
+                    <option value="Học kỳ 3">Học kỳ 3</option>
                 </select>
-                <button type="submit">Đăng ký</button>
-            </form>
+                <button type="button" id="submit-btn" onclick="handleSubmit()">Đăng Ký</button>
+            </form> 
+            <h2>Danh Sách Đăng Ký</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã Môn Học</th>
+                    <th>Tên Môn Học</th>
+                    <th>Học Kỳ</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody id="subject-list"></tbody>
+        </table>
         </div>
 
         <div class="right-sidebar">
@@ -65,5 +72,95 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const subjectList = document.getElementById("subject-list");
+            let editingRow = null;
+            const submitBtn = document.getElementById("submit-btn");
+
+            function loadSubjects() {
+                const savedSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
+                subjectList.innerHTML = "";
+                savedSubjects.forEach((subject, index) => addRow(subject, index + 1));
+            }
+
+            function saveSubjects() {
+                const rows = Array.from(subjectList.children).map((row, index) => {
+                    return {
+                        subjectId: row.cells[1].textContent,
+                        subjectName: row.cells[2].textContent,
+                        semester: row.cells[3].textContent
+                    };
+                });
+                localStorage.setItem("subjects", JSON.stringify(rows));
+                updateSTT();
+            }
+
+            function addRow(subject, stt) {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>${stt}</td>
+                    <td>${subject.subjectId}</td>
+                    <td>${subject.subjectName}</td>
+                    <td>${subject.semester}</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>`;
+                subjectList.appendChild(newRow);
+                addEventListeners(newRow);
+            }
+
+            function updateSTT() {
+                Array.from(subjectList.children).forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            window.handleSubmit = function () {
+                const subjectId = document.getElementById("subject-id").value;
+                const subjectName = document.getElementById("subject-name").value;
+                const semester = document.getElementById("semester").value;
+
+                if (!subjectId || !subjectName || !semester) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                if (editingRow) {
+                    editingRow.cells[1].textContent = subjectId;
+                    editingRow.cells[2].textContent = subjectName;
+                    editingRow.cells[3].textContent = semester;
+                    editingRow = null;
+                    submitBtn.textContent = "Đăng Ký";
+                } else {
+                    addRow({ subjectId, subjectName, semester }, subjectList.children.length + 1);
+                }
+                saveSubjects();
+                document.getElementById("register-form").reset();
+            };
+
+            function deleteSubject(event) {
+                event.target.closest("tr").remove();
+                saveSubjects();
+                updateSTT();
+            }
+
+            function editSubject(event) {
+                editingRow = event.target.closest("tr");
+                document.getElementById("subject-id").value = editingRow.cells[1].textContent;
+                document.getElementById("subject-name").value = editingRow.cells[2].textContent;
+                document.getElementById("semester").value = editingRow.cells[3].textContent;
+                submitBtn.textContent = "Cập Nhật";
+            }
+
+            function addEventListeners(row) {
+                row.querySelector(".delete-btn").onclick = deleteSubject;
+                row.querySelector(".edit-btn").onclick = editSubject;
+            }
+
+            loadSubjects();
+        });
+    </script>
 </body>
 </html>
