@@ -27,8 +27,8 @@
                 <input type="text" id="hoTen" placeholder="Họ và Tên">
                 <input type="text" id="monHoc" placeholder="Môn học">
                 <input type="text" id="mamonHoc" placeholder="Mã môn học">
-                <input type="number" id="diem" placeholder="Điểm">
-                <button class="add-btn">Thêm</button>
+                <input type="number" id="diem" placeholder="Điểm" min="0" max="10">
+                <button class="add-btn" onclick="themDiem()">Thêm</button>
             </div>
             <table>
                 <thead>
@@ -42,42 +42,149 @@
                         <th>Thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>HS001</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>Toán Cao cấp</td>
-                         <td>7080953</td>
-                        <td contenteditable="true">9.0</td>
-                        <td class="actions">
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>HS002</td>
-                        <td>Trần Thị B</td>
-                        <td>Logic đại cương</td>
-                        <td>703012</td>
-                        <td contenteditable="true">8.5</td>
-                        
-                        <td class="actions">
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
+                <tbody id="tableBody">
                 </tbody>
             </table>
-
-            <div class="pagination">
-                <a href="#">&laquo;</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">&raquo;</a>
-            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    let stt = 1;
+                    const tableBody = document.getElementById("tableBody");
+            
+                    // Tải dữ liệu từ LocalStorage khi trang mở lại
+                    function loadData() {
+                        let savedData = localStorage.getItem("studentScores");
+                        if (savedData) {
+                            tableBody.innerHTML = savedData;
+                            updateSTT(); // Cập nhật lại STT sau khi load dữ liệu
+                            addEventListeners(); // Gán lại sự kiện cho các nút
+                        }
+                    }
+            
+                    // Lưu dữ liệu vào LocalStorage
+                    function saveData() {
+                        localStorage.setItem("studentScores", tableBody.innerHTML);
+                        addEventListeners(); // Đảm bảo các sự kiện được gán lại sau khi lưu
+                    }
+            
+                    // Cập nhật lại số thứ tự cho bảng
+                    function updateSTT() {
+                        let rows = tableBody.getElementsByTagName("tr");
+                        for (let i = 0; i < rows.length; i++) {
+                            rows[i].cells[0].textContent = i + 1;
+                        }
+                        stt = rows.length + 1; // Cập nhật STT tiếp theo
+                    }
+            
+                    // Thêm điểm sinh viên vào bảng
+                    window.themDiem = function () {
+                        let maHS = document.getElementById("maHS").value;
+                        let hoTen = document.getElementById("hoTen").value;
+                        let monHoc = document.getElementById("monHoc").value;
+                        let mamonHoc = document.getElementById("mamonHoc").value;
+                        let diem = document.getElementById("diem").value;
+            
+                        if (!maHS || !hoTen || !monHoc || !mamonHoc || diem === "") {
+                            alert("Vui lòng nhập đầy đủ thông tin!");
+                            return;
+                        }
+            
+                        diem = parseFloat(diem);
+                        if (isNaN(diem) || diem < 0 || diem > 10) {
+                            alert("Điểm phải từ 0 đến 10!");
+                            return;
+                        }
+            
+                        let row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${stt++}</td>
+                            <td>${maHS}</td>
+                            <td>${hoTen}</td>
+                            <td>${monHoc}</td>
+                            <td>${mamonHoc}</td>
+                            <td><span class="diem-text">${diem}</span> <input type="number" class="diem-input" value="${diem}" min="0" max="10" style="display:none;"></td>
+                            <td class="actions">
+                                <button class="edit-btn">Sửa</button>
+                                <button class="save-btn" >Lưu</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>`;
+                        
+                        tableBody.appendChild(row);
+                        saveData(); // Lưu dữ liệu vào LocalStorage
+                        addEventListeners(); // Gán lại sự kiện
+            
+                        // Xóa ô nhập sau khi thêm thành công
+                        document.getElementById("maHS").value = "";
+                        document.getElementById("hoTen").value = "";
+                        document.getElementById("monHoc").value = "";
+                        document.getElementById("mamonHoc").value = "";
+                        document.getElementById("diem").value = "";
+                    };
+            
+                    // Xóa dòng điểm sinh viên
+                    function xoaDiem(event) {
+                        event.target.closest("tr").remove();
+                        updateSTT(); // Cập nhật lại STT sau khi xóa
+                        saveData(); // Cập nhật LocalStorage
+                    }
+            
+                    // Chỉnh sửa điểm
+                    function suaDiem(event) {
+                        let row = event.target.closest("tr");
+                        let diemText = row.querySelector(".diem-text");
+                        let diemInput = row.querySelector(".diem-input");
+                        let saveButton = row.querySelector(".save-btn");
+                        let editButton = row.querySelector(".edit-btn");
+            
+                        diemText.style.display = "none"; // Ẩn điểm hiện tại
+                        diemInput.style.display = "inline-block"; // Hiện ô nhập
+                        saveButton.style.display = "inline-block"; // Hiện nút Lưu
+                        editButton.style.display = "none"; // Ẩn nút Sửa
+                    }
+            
+                    // Lưu điểm sau khi chỉnh sửa
+                    function luuDiem(event) {
+                        let row = event.target.closest("tr");
+                        let diemText = row.querySelector(".diem-text");
+                        let diemInput = row.querySelector(".diem-input");
+                        let saveButton = row.querySelector(".save-btn");
+                        let editButton = row.querySelector(".edit-btn");
+            
+                        let newDiem = parseFloat(diemInput.value);
+                        if (isNaN(newDiem) || newDiem < 0 || newDiem > 10) {
+                            alert("Điểm phải từ 0 đến 10!");
+                            return;
+                        }
+            
+                        diemText.textContent = newDiem; // Cập nhật điểm mới
+                        diemText.style.display = "inline-block"; // Hiện lại điểm
+                        diemInput.style.display = "none"; // Ẩn ô nhập
+                        saveButton.style.display = "none"; // Ẩn nút Lưu
+                        editButton.style.display = "inline-block"; // Hiện lại nút Sửa
+            
+                        saveData(); // Lưu vào LocalStorage
+                    }
+            
+                    // Gán lại sự kiện cho nút Sửa, Lưu và Xóa
+                    function addEventListeners() {
+                        document.querySelectorAll(".delete-btn").forEach((btn) => {
+                            btn.onclick = xoaDiem;
+                        });
+            
+                        document.querySelectorAll(".edit-btn").forEach((btn) => {
+                            btn.onclick = suaDiem;
+                        });
+            
+                        document.querySelectorAll(".save-btn").forEach((btn) => {
+                            btn.onclick = luuDiem;
+                        });
+                    }
+            
+                    // Tải dữ liệu khi trang mở lại
+                    loadData();
+                });
+            </script>
+            
+            
         </div>
 
         <div class="right-sidebar">

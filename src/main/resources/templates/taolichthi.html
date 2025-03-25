@@ -31,7 +31,7 @@
                 <input type="text" id="subject" name="subject" placeholder="Nhập mã môn học" required>
 
                 <label for="day">Ngày thi:</label>
-                <input type="date" id="day" name="day" required>
+                <input type="date" id="day" name="day"  required>
 
                 <label for="time">Giờ thi:</label>
                 <input type="time" id="time" name="time" required>
@@ -117,7 +117,12 @@
             </div>
         </div>
     </div>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById("day").setAttribute("min", today);
+        });
+    </script>
     
 </body>
 </html>
