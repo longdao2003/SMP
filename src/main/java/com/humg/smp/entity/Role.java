@@ -3,8 +3,12 @@ package com.humg.smp.entity;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import com.humg.smp.constant.RoleType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +26,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
+    private RoleType code;
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
 

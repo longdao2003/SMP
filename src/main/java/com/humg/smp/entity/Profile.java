@@ -17,9 +17,7 @@ public class Profile {
     @Id
     private String identityCard;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+
 
     @ManyToOne
     @JoinColumn(name = "score_id")
@@ -43,6 +41,7 @@ public class Profile {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    
     private Integer teacherId;
     private String email;
 

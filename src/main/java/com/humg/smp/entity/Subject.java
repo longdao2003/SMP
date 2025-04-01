@@ -22,9 +22,6 @@ public class Subject {
     @JoinColumn(name = "major_id")
     private MajorChild majorChild;
 
-    @ManyToOne
-    @JoinColumn(name = "term_year_id")
-    private Term term;
 
     // Getters and setters
 }

@@ -26,7 +26,7 @@ public class UserController {
     public String getUserPage(Model model) {
 
         List<UserRespone> users=userService.getAllUser();
-        System.out.println(users);
+
         model.addAttribute(ViewConstants.LIST_USER,userService.getAllUser());
         model.addAttribute(ViewConstants.ROLE_TYPE, RoleType.values() );
         return "user/user";
