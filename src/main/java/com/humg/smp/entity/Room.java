@@ -1,24 +1,16 @@
 package com.humg.smp.entity;
 
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "room")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Room {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private String name;
 
-    byte capacity;
-    boolean is_allowed;
+    private Integer capacity;
+    private Boolean isAllowed;
 
+    // Getters and setters
 }

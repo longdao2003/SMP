@@ -1,31 +1,33 @@
 package com.humg.smp.entity;
 
-import java.util.List;
 
 import com.humg.smp.constant.GenderType;
 
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "gender")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Gender {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    Long id;
+    @Enumerated(EnumType.STRING)    
+    private GenderType code;
 
-    @Enumerated(EnumType.STRING)
-    GenderType type;
+    
+    private String name;
 
-    @OneToMany(mappedBy = "gender")
-    List<User> users;
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

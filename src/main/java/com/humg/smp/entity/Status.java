@@ -1,30 +1,35 @@
 package com.humg.smp.entity;
 
-import java.util.List;
 
 import com.humg.smp.constant.StatusType;
 
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "status")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private int id;
 
     @Enumerated(EnumType.STRING)
-    StatusType type;
+    private StatusType code;
 
-    @OneToMany(mappedBy = "status")
-    List<User> users;
+    private String name;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    // Getters and setters
 }

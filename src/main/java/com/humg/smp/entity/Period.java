@@ -1,26 +1,29 @@
 package com.humg.smp.entity;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.time.LocalTime;
 
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "class")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Period {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Integer id;
 
-    LocalDate starDate;
-    LocalDate endDate;
-    String name;
+    private String name;
+
+    @Temporal(TemporalType.TIME)
+    private LocalTime startHour;
+
+    @Temporal(TemporalType.TIME)
+    private LocalTime endHour;
+
+    // Getters and setters
 }

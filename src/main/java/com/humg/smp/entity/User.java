@@ -1,74 +1,48 @@
 package com.humg.smp.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-import lombok.AccessLevel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
-@Entity
+
+
+@Table(name = "users")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 public class User {
 
     @Id
-    Long userID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String userName;
+    private String password;
+    private String email;
+
+    private Boolean activeFlag = true;
 
     @ManyToOne
-    @JoinColumn(name = "roleID")
-    Role role;
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
-    String password;
-    String identityCard;
-    String name;
-    Timestamp dateOfBirth;
-    String phone;
-    
-    @ManyToOne
-    @JoinColumn(name="genderID")
-    Gender gender;
-    
-    
-    
-    String address;
-    
-    @ManyToOne
-    @JoinColumn(name="statusID")
-    Status status;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createDate ;
 
-    @OneToOne
-    @JoinColumn(name="teacherID", referencedColumnName = "userID", insertable = false, updatable = false )
-    User teacher;
-    String email;
-    
-    @ManyToOne
-    @JoinColumn(name="majorID")
-    Major major;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime updateDate ;
 
-    @ManyToOne
-    @JoinColumn(name="classID")
-    Class cLass;
-
-
-    int learnedCredits;
-    Long paidTutionFee;
-    Long tutionFee;
-    Long debtTutionFee;
+    @OneToMany(mappedBy = "user")
+    List<UserRole> userRoles;
 }

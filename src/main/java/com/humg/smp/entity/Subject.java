@@ -1,40 +1,30 @@
 package com.humg.smp.entity;
 
-import java.util.List;
-
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Subject {
-    
+
     @Id
-    String subjectID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    private Integer id;
 
-    String name;
-    int credits;
+    private String name;
+    private Integer credits;
 
-    @ManyToMany()
-    @JoinTable(
-        name="term_subject",
-        joinColumns = @JoinColumn(name ="subjectID"),
-        inverseJoinColumns = @JoinColumn(name = "termID")
-    )
-    List<Term> terms;
+    @ManyToOne
+    @JoinColumn(name = "major_id")
+    private MajorChild majorChild;
 
-    Long preSubjectID;
-    boolean isElective;
+    @ManyToOne
+    @JoinColumn(name = "term_year_id")
+    private Term term;
 
-
-    @OneToMany(mappedBy = "subject")
-    List<SubjectMajor> subjectMajors;
+    // Getters and setters
 }
