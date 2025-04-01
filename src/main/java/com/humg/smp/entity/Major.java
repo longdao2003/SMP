@@ -1,26 +1,19 @@
 package com.humg.smp.entity;
 
-import jakarta.persistence.*;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "major")
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Major {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Integer id;
 
-    String name;
+    private String code;
+    private String name;
 
-    Long childMajorID;
-
-    String majorID;
+    // Getters and setters
 }

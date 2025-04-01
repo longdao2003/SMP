@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thông tin đào tạo</title>
+    
+    <!-- Sử dụng Thymeleaf để liên kết CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles_1.css}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16" style="margin: 0 0 -2 0;">
+                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                </svg>
+                <a th:href="@{/dashboard}" style="text-decoration: none; color: aliceblue;">Trang chủ</a>
+            </span>
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="left-content">
+            <p th:if="${userProfile == null}">Không có dữ liệu</p>
+            <div th:unless="${userProfile == null}">
+                <section class="news">
+                    <h2>THÔNG TIN SINH VIÊN</h2>
+                    <div class="news-item">
+                        <div class="row align-items-center">
+                            <!-- Cột chứa nội dung thông tin sinh viên -->
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-4"><strong>Mã SV:</strong></div>
+                                    <div class="col-8" th:text="${session.user.id}"></div>
+                                    <div class="col-4"><strong>Họ và tên:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.name}"></div>
+                                    <div class="col-4"><strong>Ngày sinh:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.dateOfBirth}"></div>
+                                    <div class="col-4"><strong>Giới tính:</strong></div>
+                                    <div class="col-8"  th:text="${userProfile.gender}"></div>
+                                    <div class="col-4"><strong>Điện thoại:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.phone}"></div>
+                                    <div class="col-4"><strong>Số CMND/CCCD:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.identityCard}"></div>
+                                    <div class="col-4"><strong>Email:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.email}">2121051396@student.humg.edu.vn</div>
+                                    <div class="col-4"><strong>Hiện diện:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.status}"></div>
+                                    <div class="col-4"><strong>Hộ khẩu:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.address}"></div>
+                                </div>
+                            </div>
+                            <!-- Cột chứa ảnh sinh viên -->
+                            <div class="col-md-2 text-center">
+                                <img th:src="@{${userProfile.image}}" alt="Ảnh sinh viên" class="img-fluid rounded">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </section>
+
+                <section class="news">
+                    <h2>THÔNG TIN KHÓA HỌC</h2>
+                    <div class="news-item">
+                        <div class="row align-items-center">
+                            <!-- Cột chứa nội dung thông tin sinh viên -->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-4"><strong>Lớp:</strong></div>
+                                    <div class="col-8" th:text="${userProfile.classInfo}"></div>
+                                    <div class="col-4"><strong>Ngành:</strong></div>
+                                    <div class="col-8">Công nghệ thông tin</div>
+                                    <div class="col-4"><strong>Chuyên ngành:</strong></div>
+                                    <div class="col-8">Công nghệ phần mềm</div>
+                                    <div class="col-4"><strong>Khoa:</strong></div>
+                                    <div class="col-8">Công nghệ thông tin</div>
+                                    <div class="col-4"><strong>Bậc hệ đào tạo:</strong></div>
+                                    <div class="col-8">Chương trình đào tạo Đại học CDIO 4.5 năm hệ CQ</div>
+                                    <div class="col-4"><strong>Niên khóa:</strong></div>
+                                    <div class="col-8">2021-2026</div>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </section>
+    
+            </div>
+        
+            <br>
+
+          
+        </div>
+        <aside class="right-sidebar">
+            <div class="login-box">
+                <h3>ĐĂNG NHẬP</h3>
+                <p th:utext="${'Mã số  '+session.role+' :' + session.user.id}"></p>
+                <p>Họ và tên: <span th:text="${userProfile.name}"></span></p>
+                <a th:href="@{/logout}" class="logout-btn">Đăng xuất</a>
+            </div>
+
+   
+            <aside th:replace="~{layout/sidebar :: sidebar}"></aside>
+        </aside>
+    </div>
+
+    <!-- Liên kết JavaScript -->
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
