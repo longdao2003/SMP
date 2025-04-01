@@ -167,18 +167,17 @@ body {
             background-color: aqua;
         }
         .pagination {
-            margin-top: 10px;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-        .pagination a {
-            text-decoration: none;
+        .pagination button {
+            margin: 0 5px;
             padding: 5px 10px;
-            border: 1px solid #ccc;
-            margin: 0 3px;
-            color: #007BFF;
         }
-        .pagination a.active {
-            background-color:#007BFF;
+        .pagination .active {
+            font-weight: bold;
+            background-color: #007bff;
             color: white;
         }
         .input-form {

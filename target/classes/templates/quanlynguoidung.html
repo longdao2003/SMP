@@ -52,6 +52,7 @@
                 </thead>
                 <tbody id="user-list"></tbody>
             </table>
+            <div class="pagination" id="pagination"></div>
         </div>
 
         <div class="right-sidebar">
@@ -65,35 +66,51 @@
             <div class="feature-box">
                 <h3>TÍNH NĂNG</h3>
                 <ul>
-                    <li> <a href="quanlynguoidung.html">Quản lý người dùng</a></li>
-                    <li> <a href="quanlymonhoc.html">Quản lý môn học</a></li>
-                    <li> <a href="taolichthi.html">Tạo lịch thi</a></li>
-                    <li> <a href="taolichhoc.html">Tạo lịch học</a></li>
+                    <li><a href="quanlynguoidung.html">Quản lý người dùng</a></li>
+                    <li><a href="quanlymonhoc.html">Quản lý môn học</a></li>
+                    <li><a href="taolichthi.html">Tạo lịch thi</a></li>
+                    <li><a href="taolichhoc.html">Tạo lịch học</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <script>
+        const itemsPerPage = 5;
+        let currentPage = 1;
+
         document.addEventListener("DOMContentLoaded", function () {
             const userList = document.getElementById("user-list");
             let editingRow = null;
             const submitBtn = document.getElementById("submit-btn");
 
             function loadUsers() {
+                const userList = document.getElementById("user-list");
+                const pagination = document.getElementById("pagination");
                 const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+                const totalPages = Math.ceil(savedUsers.length / itemsPerPage);
+
                 userList.innerHTML = "";
-                savedUsers.forEach((user, index) => addRow(user, index + 1));
+                pagination.innerHTML = "";
+
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                savedUsers.slice(start, end).forEach((user, index) => addRow(user, start + index + 1));
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement("button");
+                    pageButton.textContent = i;
+                    pageButton.className = (i === currentPage) ? 'active' : '';
+                    pageButton.onclick = () => {
+                        currentPage = i;
+                        loadUsers();
+                    };
+                    pagination.appendChild(pageButton);
+                }
             }
 
-            function saveUsers() {
-                const rows = Array.from(userList.children).map((row, index) => {
-                    return {
-                        userId: row.cells[1].textContent,
-                        userName: row.cells[2].textContent,
-                        userRole: row.cells[3].textContent
-                    };
-                });
-                localStorage.setItem("users", JSON.stringify(rows));
+            function saveUsers(users) {
+                localStorage.setItem("users", JSON.stringify(users));
                 updateSTT();
             }
 
@@ -109,7 +126,7 @@
                         <button class="delete-btn">Xóa</button>
                     </td>`;
                 userList.appendChild(newRow);
-                addEventListeners(newRow);
+                addEventListeners(newRow, user);
             }
 
             function updateSTT() {
@@ -128,40 +145,78 @@
                     return;
                 }
 
+                const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+                
                 if (editingRow) {
-                    editingRow.cells[1].textContent = userId;
-                    editingRow.cells[2].textContent = userName;
-                    editingRow.cells[3].textContent = userRole;
+                    const index = Array.from(userList.children).indexOf(editingRow);
+                    savedUsers[index] = { 
+                        userId, 
+                        userName, 
+                        userRole,
+                        dob: savedUsers[index]?.dob || "",
+                        phone: savedUsers[index]?.phone || "",
+                        email: savedUsers[index]?.email || "",
+                        gender: savedUsers[index]?.gender || "",
+                        address: savedUsers[index]?.address || "",
+                        status: savedUsers[index]?.status || "",
+                        major: savedUsers[index]?.major || "",
+                        class: savedUsers[index]?.class || ""
+                    };
                     editingRow = null;
                     submitBtn.textContent = "Thêm Người Dùng";
                 } else {
-                    addRow({ userId, userName, userRole }, userList.children.length + 1);
+                    savedUsers.push({ 
+                        userId, 
+                        userName, 
+                        userRole,
+                        dob: "",
+                        phone: "",
+                        email: "",
+                        gender: "",
+                        address: "",
+                        status: "",
+                        major: "",
+                        class: ""
+                    });
                 }
-                saveUsers();
+                saveUsers(savedUsers);
                 document.getElementById("add-user-form").reset();
+                loadUsers();
             };
 
             function deleteUser(event) {
-                event.target.closest("tr").remove();
-                saveUsers();
-                updateSTT();
+                const row = event.target.closest("tr");
+                const index = Array.from(userList.children).indexOf(row);
+                const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+                savedUsers.splice(index, 1);
+                saveUsers(savedUsers);
+                loadUsers();
             }
 
-            function editUser(event) {
-                editingRow = event.target.closest("tr");
-                document.getElementById("user-id").value = editingRow.cells[1].textContent;
-                document.getElementById("user-name").value = editingRow.cells[2].textContent;
-                document.getElementById("user-role").value = editingRow.cells[3].textContent;
-                submitBtn.textContent = "Cập nhật";
+            function editUser(event, user) {
+                const queryParams = new URLSearchParams({
+                    userId: user.userId,
+                    userName: user.userName,
+                    userRole: user.userRole,
+                    dob: user.dob || "",
+                    phone: user.phone || "",
+                    email: user.email || "",
+                    gender: user.gender || "",
+                    address: user.address || "",
+                    status: user.status || "",
+                    major: user.major || "",
+                    class: user.class || ""
+                }).toString();
+                window.location.href = `thongtinnguoidung.html?${queryParams}`;
             }
 
-            function addEventListeners(row) {
-                row.querySelector(".delete-btn").onclick = deleteUser;
-                row.querySelector(".edit-btn").onclick = editUser;
+            function addEventListeners(row, user) {
+                row.querySelector(".edit-btn").addEventListener("click", (event) => editUser(event, user));
+                row.querySelector(".delete-btn").addEventListener("click", deleteUser);
             }
 
             loadUsers();
         });
     </script>
-</body> 
+</body>
 </html>

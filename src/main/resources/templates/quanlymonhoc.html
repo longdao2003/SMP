@@ -48,6 +48,7 @@
                 </thead>
                 <tbody id="subject-list"></tbody>
             </table>
+            <div class="pagination" id="pagination"></div>
         </div>
 
         <div class="right-sidebar">
@@ -70,17 +71,43 @@
         </div>
     </div>
     <script>
+        const itemsPerPage = 5;
+        let currentPage = 1;
+
         document.addEventListener("DOMContentLoaded", function () {
             const subjectList = document.getElementById("subject-list");
             let editingRow = null;
             const submitBtn = document.getElementById("submit-btn");
 
             function loadSubjects() {
-                const savedSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
-                subjectList.innerHTML = "";
-                savedSubjects.forEach((subject,index) => addRow(subject,index +1));
-            }
+            const subjectList = document.getElementById("subject-list");
+            const pagination = document.getElementById("pagination");
+            const savedSubjects = JSON.parse(localStorage.getItem("subjects")) || [];
+            const totalPages = Math.ceil(savedSubjects.length / itemsPerPage);
 
+            // Xóa danh sách và phân trang hiện tại
+            subjectList.innerHTML = "";
+            pagination.innerHTML = "";
+
+            // Tính chỉ số bắt đầu và kết thúc
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            // Hiển thị môn học trong khoảng từ start đến end
+            savedSubjects.slice(start, end).forEach((subject, index) => addRow(subject, start + index + 1));
+
+            // Tạo các nút phân trang
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement("button");
+                pageButton.textContent = i;
+                pageButton.className = (i === currentPage) ? 'active' : '';
+                pageButton.onclick = () => {
+                    currentPage = i;
+                    loadSubjects();
+                };
+                pagination.appendChild(pageButton);
+            }
+        }
             function saveSubjects() {
                 const rows = Array.from(subjectList.children).map((row,index) => {
                     return {
