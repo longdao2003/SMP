@@ -140,7 +140,7 @@ body {
           form button:hover {
             background-color: #0056b3;
           }
-          .edit-btn .delete-btn {
+          .edit-btn .delete-btn .add-btn .save-btn{
             background-color: #007BFF;
             color: white;
             padding: 5px 10px;
@@ -157,7 +157,33 @@ body {
             background-color: red;
             color: white;
         }
-        
+        .add-btn:hover{
+            background-color: aqua;
+        }
         .delete-btn:hover {
             background-color: darkred;
         }    
+        .save-btn:hover {
+            background-color: aqua;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+        .pagination .active {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+        }
+        .input-form {
+            margin-bottom: 20px;
+        }
+        .input-form input, .input-form button {
+            padding: 10px;
+            margin: 5px;
+        }
