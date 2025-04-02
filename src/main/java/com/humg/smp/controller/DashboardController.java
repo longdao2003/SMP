@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.humg.smp.constant.ViewConstants;
-import com.humg.smp.entity.Profile;
 import com.humg.smp.entity.User;
 import com.humg.smp.service.profile.ProfileService;
 

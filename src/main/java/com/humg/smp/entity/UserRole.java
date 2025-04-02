@@ -1,6 +1,7 @@
 package com.humg.smp.entity;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +20,7 @@ import lombok.Setter;
 @Table(name = "user_role")
 @Getter
 @Setter
+
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +42,26 @@ public class UserRole {
 
     @Column(name = "update_date", insertable = false)
     private Timestamp updateDate;
+
+
+    
+
+
+     @PrePersist
+    public void prePersist() {
+        if (activeFlag == null) {
+            activeFlag = true;
+        }
+
+        if (createDate == null) {
+            createDate = Timestamp.from(Instant.now());  
+        }
+
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updateDate = Timestamp.from(Instant.now());
+    }
 }
 

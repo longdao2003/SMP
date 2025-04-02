@@ -16,10 +16,8 @@ public class UserMapping {
 
     public static User toEntity(UserRequest userRequest){
         User u= new User();
-        u.setId(userRequest.getId());
-        u.getProfile().setName(userRequest.getName());
-        
-        
+        u.setActiveFlag(userRequest.getActiveFlag());
+        u.setUserName(userRequest.getName());
         return u;
      }
 }

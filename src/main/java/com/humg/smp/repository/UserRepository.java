@@ -10,4 +10,5 @@ import com.humg.smp.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByIdAndPassword(Long id, String password);
+
 }

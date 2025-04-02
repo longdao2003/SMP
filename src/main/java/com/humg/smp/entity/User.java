@@ -1,26 +1,28 @@
 package com.humg.smp.entity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-
-@Table(name = "users")
-@Getter
-@Setter
-@Builder
+@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -37,12 +39,65 @@ public class User {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createDate ;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updateDate ;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRole> userRoles ;
 
-    @OneToMany(mappedBy = "user")
-    List<UserRole> userRoles;
+    // ✅ @PrePersist: Thiết lập mặc định cho entity khi tạo mới
+    @PrePersist
+    public void prePersist() {
+        if (this.password == null || this.password.isEmpty()) {
+            this.password = "1"; // Đặt giá trị mặc định nếu chưa có
+        }
+
+        if (createDate == null) {
+            createDate = LocalDateTime.now();
+        }
+
+        updateDate = LocalDateTime.now();
+
+        if (activeFlag == null) {
+            activeFlag = true;
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updateDate = LocalDateTime.now();
+    }
+
+    // Getters & Setters
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getActiveFlag() {
+        return activeFlag;
+    }
+
+    public void setActiveFlag(Boolean activeFlag) {
+        this.activeFlag = activeFlag;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
+    }
 }

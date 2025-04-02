@@ -1,5 +1,8 @@
 package com.humg.smp.dto.request;
 
+
+import com.humg.smp.constant.RoleType;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest {
-    Long id;
-    String name;
-    String codeRole;
-    String email;
-    Boolean activeFlag;
 
-    
+    private Long id;
+    private String name;
+    private RoleType codeRole;   
+    private Boolean activeFlag;
+
+    private String identi_card;
 
 }
