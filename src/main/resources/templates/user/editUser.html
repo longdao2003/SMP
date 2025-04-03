@@ -23,41 +23,46 @@
             <h2>Thông tin người dùng</h2>
             <form id="user-info"  >
                 <label for="username">Tên người dùng:</label>
-                <p th:text="${userProfile.name}"></p>
                 
                 <input th:value="${userProfile.name}"   type="text" id="username" name="username"   required>                
                 <label for="user_id">Mã người dùng:</label>
-                <input value="Lêu lêu" type="text" id="user_id" name="user_id" placeholder="Nhập mã người dùng" required>
+                <input th:value="${userProfile.identityCard}" type="text" id="user_id" name="user_id" placeholder="Nhập mã người dùng" required>
                 
                 <label for="dob">Ngày sinh:</label>
-                <input type="date" id="dob" name="dob" required>
+                <input  th:value="${userProfile.dateOfBirth}"   type="date" id="dob" name="dob" required>
                 
                 <label for="phone">Điện thoại:</label>
-                <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                <input th:value="${userProfile.phone}" type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
                 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Nhập email" required>
+                <input th:value="${userProfile.email}" type="email" id="email" name="email" placeholder="Nhập email" required>
                 
                 <label for="role">Vai trò:</label>
-                <select id="role" name="role" required>
-                    <option value="">Chọn vai trò</option>
-                    <option value="admin">Admin</option>
-                    <option value="giangvien">Giảng viên</option>
-                    <option value="sinhvien">Sinh viên</option>
+                <select  id="user-role" name="user-role" required>
+                    <option th:each="role : ${roleTypes}" 
+                    th:value="${role}" 
+                    th:text="${role.getName()}">
+                    </option>
                 </select>   
                 
                 <label for="gender">Giới tính:</label>
-                <select id="gender" name="gender" required>
-                    <option value="">Chọn giới tính</option>
-                    <option value="nam">Nam</option>
-                    <option value="nu">Nữ</option>
-                </select>
+                <select  id="user-role" name="user-role" required>
+                    <option th:each="role : ${genderTypes}" 
+                    th:value="${role}" 
+                    th:text="${role.getName()}">
+                    </option>
+                </select>   
                 
                 <label for="address">Địa chỉ:</label>
-                <input type="text" id="address" name="address" placeholder="Nhập địa chỉ" required>
+                <input th:value="${userProfile.email}" type="text" id="address" name="address" placeholder="Nhập địa chỉ" required>
                 
                 <label for="status">Trạng thái:</label>
-                <input type="text" id="status" name="status" placeholder="Nhập trạng thái" required>
+                <select  id="user-role" name="user-role" required>
+                    <option th:each="role : ${statusTypes}" 
+                    th:value="${role}" 
+                    th:text="${role.getName()}">
+                    </option>
+                </select>   
                 
                 <label for="major">Chuyên ngành:</label>
                 <input type="text" id="major" name="major" placeholder="Nhập chuyên ngành" required>
@@ -90,60 +95,7 @@
     </div>
     
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const params = new URLSearchParams(window.location.search);
-            document.getElementById("username").value = params.get("userName") || "";
-            document.getElementById("user_id").value = params.get("userId") || "";
-            document.getElementById("role").value = params.get("userRole") || "";
-            document.getElementById("dob").value = params.get("dob") || "";
-            document.getElementById("phone").value = params.get("phone") || "";
-            document.getElementById("email").value = params.get("email") || "";
-            document.getElementById("gender").value = params.get("gender") || "";
-            document.getElementById("address").value = params.get("address") || "";
-            document.getElementById("status").value = params.get("status") || "";
-            document.getElementById("major").value = params.get("major") || "";
-            document.getElementById("class").value = params.get("class") || "";
-        });
-    
-        function updateUser() {
-            const userId = document.getElementById("user_id").value;
-            const userName = document.getElementById("username").value;
-            const userRole = document.getElementById("role").value;
-            const dob = document.getElementById("dob").value;
-            const phone = document.getElementById("phone").value;
-            const email = document.getElementById("email").value;
-            const gender = document.getElementById("gender").value;
-            const address = document.getElementById("address").value;
-            const status = document.getElementById("status").value;
-            const major = document.getElementById("major").value;
-            const className = document.getElementById("class").value;
-
-            const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-            const index = savedUsers.findIndex(user => user.userId === userId);
-
-            const updatedUser = { 
-                userId, 
-                userName, 
-                userRole,
-                dob,
-                phone,
-                email,
-                gender,
-                address,
-                status,
-                major,
-                class: className
-            };
-
-            if (index > -1) {
-                savedUsers[index] = updatedUser;
-            } else {
-                savedUsers.push(updatedUser);
-            }
-
-            localStorage.setItem("users", JSON.stringify(savedUsers));
-            window.location.href = "quanlynguoidung.html";
-        }
+        
     </script>
 </body>
 </html>

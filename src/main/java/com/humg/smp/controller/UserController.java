@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.humg.smp.constant.GenderType;
 import com.humg.smp.constant.RoleType;
 import com.humg.smp.constant.ViewConstants;
 import com.humg.smp.dto.request.UserRequest;
@@ -54,6 +55,8 @@ public class UserController {
                 Profile p=userService.getUserProfileById(userId);
                 System.out.println(p);
                 m.addAttribute(ViewConstants.USER_PROFILE,p);
+                m.addAttribute(ViewConstants.ROLE_TYPE, RoleType.values() );
+                m.addAttribute(ViewConstants.GENDER_TYPE, GenderType.values());
                 return "user/editUser";
 
             }

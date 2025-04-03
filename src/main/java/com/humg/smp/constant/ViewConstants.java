@@ -8,4 +8,5 @@ public class ViewConstants {
     public static String LIST_USER="listUser";
     public static String PAGE_INFO="pageInfo";
     public static String ROLE_TYPE="roleTypes";
+    public static String GENDER_TYPE="genderTypes";
 }
