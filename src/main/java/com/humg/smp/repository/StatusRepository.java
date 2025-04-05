@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.humg.smp.entity.Status;
 
 @Repository
-public interface StatusRepository extends JpaRepository<Status,Integer> {
+public interface StatusRepository extends JpaRepository<Status,Long> {
     
 }

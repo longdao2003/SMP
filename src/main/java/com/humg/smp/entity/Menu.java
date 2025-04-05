@@ -21,10 +21,10 @@ import lombok.ToString;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "parent_id")
-    private Integer parent;
+    private Long parent;
 
     @Column(length = 100)
     private String url;

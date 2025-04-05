@@ -63,6 +63,7 @@ public class LoginController {
 
             }
             sortMenu(menuList);
+            session.setAttribute("name", u.getProfile().getName());
             session.setAttribute(ViewConstants.USER_INFO,u);
             session.setAttribute("role", role.getRoleName());
             session.setAttribute(ViewConstants.MENU_INFO, menuList);

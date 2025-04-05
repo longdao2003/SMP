@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Điểm</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/styles_1.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16" style="margin: 0 0 -2 0;">
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+              </svg>
+               <a href="dashboard2_GV.html" style="text-decoration: none; color: aliceblue;"> Trang chủ </a>
+            </span>
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="left-content">
+            <h2>Quản Lý Điểm Sinh Viên</h2>
+            <form action="@">
+                <label for="student-id">Mã số sinh viên:</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Nhập mã số sinh viên" required>
+
+                <label for="course">Môn học:</label>
+                <input type="text" id="course" name="course" placeholder="Nhập tên môn học" required>
+
+                <label for="midterm-score">Điểm giữa kỳ:</label>
+                <input type="number" id="midterm-score" name="midterm-score" placeholder="Nhập điểm giữa kỳ" required>
+
+                <label for="final-score">Điểm cuối kỳ:</label>
+                <input type="number" id="final-score" name="final-score" placeholder="Nhập điểm cuối kỳ" required>
+
+                <button type="submit">Nhập điểm</button>
+            </form>
+
+            <h2>Chỉnh Sửa Điểm</h2>
+            <form action="@">
+                <label for="edit-student-id">Mã số sinh viên:</label>
+                <input type="text" id="edit-student-id" name="edit-student-id" placeholder="Nhập mã số sinh viên" required>
+
+                <label for="edit-course">Môn học:</label>
+                <input type="text" id="edit-course" name="edit-course" placeholder="Nhập tên môn học" required>
+
+                <label for="new-midterm-score">Điểm giữa kỳ mới:</label>
+                <input type="number" id="new-midterm-score" name="new-midterm-score" placeholder="Nhập điểm giữa kỳ mới" required>
+
+                <label for="new-final-score">Điểm cuối kỳ mới:</label>
+                <input type="number" id="new-final-score" name="new-final-score" placeholder="Nhập điểm cuối kỳ mới" required>
+
+                <button type="submit">Cập nhật điểm</button>
+            </form>
+        </div>
+
+        <div class="right-sidebar">
+            <div class="login-box">
+                <h3>THÔNG TIN</h3>
+                <p>Mã giảng viên: 2121051396</p>
+                <p>Họ và tên: Đinh Thế Tú</p>
+                <a href="login.html" class="logout-btn">Đăng xuất</a>
+            </div>
+
+            <div class="feature-box">
+                <h3>TÍNH NĂNG</h3>
+                <ul>
+                    <li> <a href="diem.html">Quản lý điểm</a></li>
+                    <li> <a href="lichgiangday.html">Xem lịch giảng dạy</a></li>
+                    <li> <a href="dangkygiangday.html">Đăng ký giảng dạy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,6 +1,10 @@
 package com.humg.smp.constant;
 
 public class ViewConstants {
+    public static final String STATUS_TYPE = "statusTypes";
+    public static final String MAJOR_LIST = "majorList";
+    public static final String CLASS_LIST = "classList";
+    public static final String LIST_SUBJECT = "subjectList";
     public static String USER_INFO="user";
     public static String MENU_INFO="menu";
     public static String ERROR="error";

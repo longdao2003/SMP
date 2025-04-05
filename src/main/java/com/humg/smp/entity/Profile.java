@@ -42,7 +42,7 @@ public class Profile {
     private Status status;
 
     
-    private Integer teacherId;
+    private Long teacherId;
     private String email;
 
     @ManyToOne
@@ -53,7 +53,7 @@ public class Profile {
     @JoinColumn(name = "class_info_id")
     private ClassInfo classInfo;
 
-    private Integer learnedCredits = 0;
+    private int learnedCredits = 0;
     private Double paidTuitionFee = 0.00;
     private Double tuitionFee = 0.00;
     private Double debtTuitionFee = 0.00;

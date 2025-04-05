@@ -97,6 +97,12 @@ public class UserServiceImpl  implements UserService{
         }
         return u.getProfile();
     }
+    @Override
+    public void deleteUser(Long userId) {
+        User u=userRepository.findById(userId).get();
+        u.setActiveFlag(!u.getActiveFlag());
+        userRepository.save(u);
+    }
 
     
 }

@@ -16,7 +16,7 @@ public class Term {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "year_id")
@@ -28,7 +28,7 @@ public class Term {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    private Integer termNumber;
+    private Long termNumber;
     private String yearName;
 
     // Getters and setters

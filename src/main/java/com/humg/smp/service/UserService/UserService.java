@@ -18,5 +18,7 @@ public interface UserService {
     void createUser(UserRequest userRequest) throws RuntimeException;
 
     Profile getUserProfileById(Long userId) throws RuntimeException;
+
+    void deleteUser(Long userId);
 }
 

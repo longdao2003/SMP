@@ -1,26 +1,26 @@
-package com.humg.smp.entity;
+// package com.humg.smp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.EnumType;
+// import jakarta.persistence.Enumerated;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
 
-@Entity
-public class TimetableType {
+// @Entity
+// public class TimetableType {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
-    private Integer id;
+//     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private com.humg.smp.constant.TimetableType code;
+//     @Enumerated(EnumType.STRING)
+//     private com.humg.smp.constant.TimetableType code;
 
-    private String name;
+//     private String name;
 
-    // Getters and setters
+//     // Getters and setters
 
 
-}
+// }
